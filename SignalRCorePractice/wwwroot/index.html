@@ -31,7 +31,7 @@
 
                 //li要素のテキストとしてmessageをセットして追加
                 li.innerText = message;
-                document.getElementById('messages').appendChild(li);
+                document.getElementById('messages').insertAdjacentElement('afterbegin',li);
             });
 
             //Sendボタンが押されたときの処理.Clickイベントにイベントハンドラを設定している.
