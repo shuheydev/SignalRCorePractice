@@ -6,8 +6,9 @@
 </head>
 <body>
     <!-- 入力欄とボタン -->
-    <input type="text" id="message" />
-    <input type="button" value="Send" id="send" />
+    オブジェクト送信
+    <input type="text" id="message2" />
+    <input type="button" value="SendObject" id="sendObjectBtn" />
 
     <!-- ここにメッセージが追加されていく -->
     <ul id="messages"></ul>
@@ -23,25 +24,31 @@
                 .build();
 
             //サーバーからのメッセージ受信時の処理
-            connection.on('receive', function (message,from) { //サーバー側からこのreceiveが呼び出されたときに実行されるfunctionを登録する
+            connection.on('receiveObject', function (message) { //サーバー側からこのreceiveが呼び出されたときに実行されるfunctionを登録する
                 //messageにサーバーからのデータが入ってくる
                 //li要素を新規作成
                 var li = document.createElement('li');
 
                 //li要素のテキストとしてmessageをセットして追加
-                li.innerText = message+":::"+from;
+                li.innerText = message.body+"_"+message.senderName+"_"+message.sendDateTime;
                 document.getElementById('messages').insertAdjacentElement('afterbegin', li);
             });
 
             //サーバーにメッセージを送る処理
             //Sendボタンが押されたときの処理.Clickイベントにイベントハンドラを設定している.
-            document.getElementById('send').addEventListener('click', async function () { //サーバー側のメソッド名を文字列で
+            document.getElementById('sendObjectBtn').addEventListener('click', async function () { //サーバー側のメソッド名を文字列で
                 //テキストボックス内の文字列を取得
-                var value = document.getElementById('message').value;
+                var value = document.getElementById('message2').value;
+                var date = new Date();
+                var message = {
+                    SenderName: "Browser",
+                    Body: value,
+                    SendDateTime: date
+                }
 
                 //サーバー側のSendメソッドにvalue(= message)を渡して実行する.
                 //文字列でサーバー側のsendメソッドを指定する
-                await connection.invoke('send', value,"Browser"); //サーバー側のメソッド名を文字列で
+                await connection.invoke('sendObject',message); //サーバー側のメソッド名を文字列で
             });
 
             //接続開始

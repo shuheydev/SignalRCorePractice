@@ -26,13 +26,13 @@ namespace SignalRClientWpf
             //サーバー側からReceiveを指定して呼び出しがあったときに,
             //登録したDelegateが実行される.
             //複数回これを実行すると複数登録されるので注意.
-            connection.On<string>("Receive", (message) =>
+            connection.On<string,string>("Receive", (message,from) =>
             {
                 //Dispatcher使っている理由は?
                 //UIに直接書き込むのであればUIスレッドで行う必要があるため
                 this.Dispatcher.Invoke(() =>
                 {
-                    var newMessage = $"{message}";
+                    var newMessage = $"{message}:::{from}";
                     messagesList.Items.Add(newMessage);
                 });
             });
