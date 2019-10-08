@@ -11,5 +11,6 @@
         <ListBox x:Name="messagesList" Margin="0,151,0,0"/>
         <Button x:Name="sendButton" Content="送信" HorizontalAlignment="Left" Margin="338,100,0,0" VerticalAlignment="Top" Click="sendButton_Click"/>
         <TextBox x:Name="messageTextBox" HorizontalAlignment="Left" Margin="199,101,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="disconnectButton" Content="切断" HorizontalAlignment="Left" Margin="366,28,0,0" VerticalAlignment="Top" Click="disconnectButton_Click"/>
     </Grid>
 </Window>
