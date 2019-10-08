@@ -15,33 +15,33 @@
     <!-- クライアント側のSignalRライブラリを読み込む -->
     <script src="/lib/@microsoft/signalr/dist/browser/signalr.js"></script>
 
-    <!-- サーバーにメッセージを送る処理 -->
     <script type="text/javascript">
         (async function () {
 
             var connection = new signalR.HubConnectionBuilder()
-                .withUrl('/chathub')
+                .withUrl('/chathub') //startupのMapHubで指定したHubのURLを指定する.
                 .build();
 
             //サーバーからのメッセージ受信時の処理
-            connection.on('send', function (message) {
+            connection.on('receive', function (message) { //サーバー側からこのreceiveが呼び出されたときに実行されるfunctionを登録する
                 //messageにサーバーからのデータが入ってくる
                 //li要素を新規作成
                 var li = document.createElement('li');
 
                 //li要素のテキストとしてmessageをセットして追加
                 li.innerText = message;
-                document.getElementById('messages').insertAdjacentElement('afterbegin',li);
+                document.getElementById('messages').insertAdjacentElement('afterbegin', li);
             });
 
+            //サーバーにメッセージを送る処理
             //Sendボタンが押されたときの処理.Clickイベントにイベントハンドラを設定している.
-            document.getElementById('send').addEventListener('click', async function () {
+            document.getElementById('send').addEventListener('click', async function () { //サーバー側のメソッド名を文字列で
                 //テキストボックス内の文字列を取得
                 var value = document.getElementById('message').value;
 
                 //サーバー側のSendメソッドにvalue(= message)を渡して実行する.
-                //文字列でサーバー側のメソッドを指定する
-                await connection.invoke('send', value);
+                //文字列でサーバー側のsendメソッドを指定する
+                await connection.invoke('send', value,"Server"); //サーバー側のメソッド名を文字列で
             });
 
             //接続開始

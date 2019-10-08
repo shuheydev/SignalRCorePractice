@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 
 namespace SignalRCorePractice
 {
+
     internal class ChatHub:Hub
     {
-        public Task Send(string message)
+        public async Task Send(string message,string from)//2つのstringを受け取る
         {
-            return Clients.All.SendAsync("Send", message);
+            await Clients.All.SendAsync("Receive", $"{message}:::{from}");
         }
     }
 }

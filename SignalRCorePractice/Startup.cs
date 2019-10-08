@@ -33,7 +33,7 @@ namespace SignalRCorePractice
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapHub<ChatHub>("/chathub");//クライアント側のWithURLと同じ文字列にする
+            endpoints.MapHub<ChatHub>("/chathub");//HubのURLを決める.
         });
         }
     }
