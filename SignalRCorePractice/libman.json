@@ -5,6 +5,11 @@
     {
       "library": "@microsoft/signalr@3.0.0",
       "destination": "wwwroot/lib/@microsoft/signalr/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "twitter-bootstrap@4.3.1",
+      "destination": "wwwroot/lib/twitter-bootstrap/"
     }
   ]
 }
