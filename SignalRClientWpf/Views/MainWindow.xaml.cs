@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using SignalRCorePractice;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ namespace SignalRClientWpf
     public partial class MainWindow : Window
     {
         HubConnection connection;
+        IRetryPolicy retryPolicy = new RandomRetryPolicy();
 
         public MainWindow()
         {
@@ -18,14 +20,16 @@ namespace SignalRClientWpf
 
             //接続のためのHubConnectionのインスタンスを作成する.
             connection = new HubConnectionBuilder()
-                .WithUrl(@"https://localhost:44350/chathub")//サーバー側でMapHubで指定したURLを指定する.
-                .WithAutomaticReconnect()
+                //.WithUrl(@"https://signalrcorepractice20191006060526.azurewebsites.net/chathub")//サーバー側でMapHubで指定したURLを指定する.
+                .WithUrl("https://localhost:44350/chathub")
+                //.WithAutomaticReconnect(new[] { TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(2)})
+                .WithAutomaticReconnect(retryPolicy)
                 .Build();
 
             //サーバー側から呼び出される処理を定義
             //サーバー側からReceiveを指定して呼び出しがあったときに,
             //登録したDelegateが実行される.
-            //複数回これを実行すると複数登録されるので注意.
+            //複数回これを実行すると複数登録されるので注意.累積する.
             connection.On<string,string>("Receive", (message,from) =>
             {
                 //Dispatcher使っている理由は?
@@ -38,7 +42,8 @@ namespace SignalRClientWpf
             });
 
 
-            //接続状態のイベント
+            #region Connection eventhandler
+            //切断時
             connection.Closed += (message) =>
             {
                 this.Dispatcher.Invoke(() =>
@@ -49,6 +54,7 @@ namespace SignalRClientWpf
                 return Task.CompletedTask;
             };
 
+            //再接続試行
             connection.Reconnecting += (message) =>
             {
                 this.Dispatcher.Invoke(() =>
@@ -59,6 +65,7 @@ namespace SignalRClientWpf
                 return Task.CompletedTask;
             };
 
+            //再接続成功
             connection.Reconnected += (message) => {
                 this.Dispatcher.Invoke(() => {
                     messagesList.Items.Add($"Reconnected::{message}");
@@ -66,8 +73,12 @@ namespace SignalRClientWpf
 
                 return Task.CompletedTask;
             };
+
+            #endregion
         }
 
+
+        #region UI eventhandler
         //接続ボタンが押されたときの処理
         private async void connectButton_Click(object sender, RoutedEventArgs e)
         {
@@ -111,5 +122,6 @@ namespace SignalRClientWpf
                 messagesList.Items.Add(ex.Message);
             }
         }
+        #endregion
     }
 }
