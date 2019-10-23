@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +29,7 @@ namespace SignalRClientWpfSendObject
         {
             InitializeComponent();
 
+            var context=SynchronizationContext.Current;
             _connection = new HubConnectionBuilder()
                  .WithUrl(@"https://localhost:44350/chathub")
                  .WithAutomaticReconnect()
@@ -38,7 +40,6 @@ namespace SignalRClientWpfSendObject
                     messagesList.Items.Add($"{message.Body}_{message.SenderName}_{message.SendDateTime.ToString()}");
                 });
             });
-
         }
 
         private async void connectButton_Click(object sender, RoutedEventArgs e)
