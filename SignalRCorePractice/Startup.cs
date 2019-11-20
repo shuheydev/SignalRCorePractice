@@ -12,10 +12,28 @@ namespace SignalRCorePractice
 {
     public class Startup
     {
+        private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyCorsPolicy",
+                    builder =>
+                    {
+                        //builder.WithOrigins("https://localhost:44375")
+                        //       .AllowAnyHeader()
+                        //       .AllowAnyMethod()
+                        //       .AllowCredentials();
+                        builder.SetIsOriginAllowed(origin=>true)
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowCredentials();
+                        });
+            });
+
             services.AddSignalR();
         }
 
@@ -27,14 +45,15 @@ namespace SignalRCorePractice
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("MyCorsPolicy");
             app.UseStaticFiles();
 
             app.UseRouting();
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapHub<ChatHub>("/chathub");//Hub‚ÌURL‚ðŒˆ‚ß‚é.
-        });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/chathub");//Hub‚ÌURL‚ðŒˆ‚ß‚é.
+            });
         }
     }
 }
