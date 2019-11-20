@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRCorePractice", "Sign
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRClientWpf", "SignalRClientWpf\SignalRClientWpf.csproj", "{A702F9AD-2CB4-4CFD-BF5E-A7798F97FF5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRClientWpfSendObject", "SignalRClientWpfSendObject\SignalRClientWpfSendObject.csproj", "{8C632D4A-7264-4CD9-89DC-BBD213F19642}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRClientWpfSendObject", "SignalRClientWpfSendObject\SignalRClientWpfSendObject.csproj", "{8C632D4A-7264-4CD9-89DC-BBD213F19642}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{09ADE6DC-73F0-45D2-B767-497AF79B67D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{09ADE6DC-73F0-45D2-B767-497AF79B67D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossDomainSignalR", "CrossDomainSignalR\CrossDomainSignalR.csproj", "{BBD9FDEC-E327-4E6E-B104-B6864A180340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{09ADE6DC-73F0-45D2-B767-497AF79B67D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09ADE6DC-73F0-45D2-B767-497AF79B67D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09ADE6DC-73F0-45D2-B767-497AF79B67D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD9FDEC-E327-4E6E-B104-B6864A180340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD9FDEC-E327-4E6E-B104-B6864A180340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD9FDEC-E327-4E6E-B104-B6864A180340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD9FDEC-E327-4E6E-B104-B6864A180340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
